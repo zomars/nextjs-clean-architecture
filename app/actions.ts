@@ -1,17 +1,17 @@
 "use server";
 
 import {
-  withServerActionInstrumentation,
   captureException,
+  withServerActionInstrumentation,
 } from "@sentry/nextjs";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 
 import { SESSION_COOKIE } from "@/config";
-import { UnauthenticatedError } from "@/src/entities/errors/auth";
-import { InputParseError, NotFoundError } from "@/src/entities/errors/common";
-import { createTodoController } from "@/src/interface-adapters/controllers/todos/create-todo.controller";
-import { toggleTodoController } from "@/src/interface-adapters/controllers/todos/toggle-todo.controller";
+import { UnauthenticatedError } from "~/auth/entities/auth.error";
+import { InputParseError, NotFoundError } from "~/common/common.error";
+import { createTodoController } from "~/todos/controllers/create-todo.controller";
+import { toggleTodoController } from "~/todos/controllers/toggle-todo.controller";
 
 export async function createTodo(formData: FormData) {
   return await withServerActionInstrumentation(
@@ -38,7 +38,7 @@ export async function createTodo(formData: FormData) {
 
       revalidatePath("/");
       return { success: true };
-    },
+    }
   );
 }
 
@@ -69,6 +69,6 @@ export async function toggleTodo(todoId: number) {
 
       revalidatePath("/");
       return { success: true };
-    },
+    }
   );
 }

@@ -1,14 +1,14 @@
+import { captureException, startSpan } from "@sentry/nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { captureException, startSpan } from "@sentry/nextjs";
 
 import { SESSION_COOKIE } from "@/config";
 import {
   AuthenticationError,
   UnauthenticatedError,
-} from "@/src/entities/errors/auth";
-import { Todo } from "@/src/entities/models/todo";
-import { getTodosForUserController } from "@/src/interface-adapters/controllers/todos/get-todos-for-user.controller";
+} from "~/auth/entities/auth.error";
+import { getTodosForUserController } from "~/todos/controllers/get-todos-for-user.controller";
+import { Todo } from "~/todos/todo.model";
 import {
   Card,
   CardContent,
@@ -39,7 +39,7 @@ async function getTodos(sessionId: string | undefined) {
         captureException(err);
         throw err;
       }
-    },
+    }
   );
 }
 

@@ -1,6 +1,6 @@
-import { ITodosRepository } from "@/src/application/repositories/todos.repository.interface";
-import { IUsersRepository } from "@/src/application/repositories/users.repository.interface";
-import { IAuthenticationService } from "@/src/application/services/authentication.service.interface";
+import { IAuthenticationService } from "~/auth/authentication.service.interface";
+import { ITodosRepository } from "~/todos/todos.repository.interface";
+import { IUsersRepository } from "~/users/users.repository.interface";
 
 export const DI_SYMBOLS = {
   // Services

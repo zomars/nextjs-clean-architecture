@@ -1,22 +1,22 @@
 "use server";
 
+import {
+  captureException,
+  withServerActionInstrumentation,
+} from "@sentry/nextjs";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import {
-  withServerActionInstrumentation,
-  captureException,
-} from "@sentry/nextjs";
 
-import { Cookie } from "@/src/entities/models/cookie";
-import { signInController } from "@/src/interface-adapters/controllers/auth/sign-in.controller";
-import { signUpController } from "@/src/interface-adapters/controllers/auth/sign-up.controller";
-import { signOutController } from "@/src/interface-adapters/controllers/auth/sign-out.controller";
 import { SESSION_COOKIE } from "@/config";
-import { InputParseError } from "@/src/entities/errors/common";
+import { signInController } from "~/auth/controllers/sign-in.controller";
+import { signOutController } from "~/auth/controllers/sign-out.controller";
+import { signUpController } from "~/auth/controllers/sign-up.controller";
 import {
   AuthenticationError,
   UnauthenticatedError,
-} from "@/src/entities/errors/auth";
+} from "~/auth/entities/auth.error";
+import { Cookie } from "~/auth/entities/cookie.model";
+import { InputParseError } from "~/common/common.error";
 
 export async function signUp(formData: FormData) {
   return await withServerActionInstrumentation(
@@ -53,11 +53,11 @@ export async function signUp(formData: FormData) {
       cookies().set(
         sessionCookie.name,
         sessionCookie.value,
-        sessionCookie.attributes,
+        sessionCookie.attributes
       );
 
       redirect("/");
-    },
+    }
   );
 }
 
@@ -91,11 +91,11 @@ export async function signIn(formData: FormData) {
       cookies().set(
         sessionCookie.name,
         sessionCookie.value,
-        sessionCookie.attributes,
+        sessionCookie.attributes
       );
 
       redirect("/");
-    },
+    }
   );
 }
 
@@ -124,10 +124,10 @@ export async function signOut() {
       cookies().set(
         blankCookie.name,
         blankCookie.value,
-        blankCookie.attributes,
+        blankCookie.attributes
       );
 
       redirect("/sign-in");
-    },
+    }
   );
 }
