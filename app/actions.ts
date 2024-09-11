@@ -11,8 +11,7 @@ import { withReporting } from "~/common/lib/with-reporting";
 import { createTodoController } from "~/todos/controllers/create-todo.controller";
 import { toggleTodoController } from "~/todos/controllers/toggle-todo.controller";
 
-export const createTodo = withReporting(_createTodo);
-
+export const createTodo = withReporting(_createTodo, "createTodo");
 async function _createTodo(formData: FormData) {
   try {
     const data = Object.fromEntries(formData.entries());
@@ -36,7 +35,7 @@ async function _createTodo(formData: FormData) {
   return { success: true };
 }
 
-export const toggleTodo = withReporting(_toggleTodo);
+export const toggleTodo = withReporting(_toggleTodo, "toggleTodo");
 async function _toggleTodo(todoId: number) {
   try {
     const sessionId = cookies().get(SESSION_COOKIE)?.value;

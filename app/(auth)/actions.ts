@@ -16,7 +16,7 @@ import { InputParseError } from "~/common/common.error";
 import { captureException } from "~/common/lib/capture-exception";
 import { withReporting } from "~/common/lib/with-reporting";
 
-export const signUp = withReporting(_signUp);
+export const signUp = withReporting(_signUp, "signUp");
 async function _signUp(formData: FormData) {
   const username = formData.get("username")?.toString();
   const password = formData.get("password")?.toString();
@@ -54,7 +54,7 @@ async function _signUp(formData: FormData) {
   redirect("/");
 }
 
-export const signIn = withReporting(_signIn);
+export const signIn = withReporting(_signIn, "signIn");
 async function _signIn(formData: FormData) {
   const username = formData.get("username")?.toString();
   const password = formData.get("password")?.toString();
@@ -84,7 +84,7 @@ async function _signIn(formData: FormData) {
   redirect("/");
 }
 
-export const signOut = withReporting(_signOut);
+export const signOut = withReporting(_signOut, "signOut");
 async function _signOut() {
   const cookiesStore = cookies();
   const sessionId = cookiesStore.get(SESSION_COOKIE)?.value;
