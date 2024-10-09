@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 import { afterEach, beforeEach, expect, it } from "vitest";
 import { MockAuthenticationService } from "~/auth/authentication.service.mock";
 import { MockTodosRepository } from "~/todos/todos.repository.mock";

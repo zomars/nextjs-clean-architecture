@@ -1,4 +1,3 @@
-import "reflect-metadata";
 import { afterEach, beforeEach, expect, it } from "vitest";
 
 import { SESSION_COOKIE } from "@/config";

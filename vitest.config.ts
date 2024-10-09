@@ -8,6 +8,7 @@ export default defineConfig({
       provider: "istanbul",
       reportsDirectory: "./tests/coverage",
     },
+    setupFiles: ["vitest.setup.ts"],
   },
   plugins: [env()],
   resolve: {
