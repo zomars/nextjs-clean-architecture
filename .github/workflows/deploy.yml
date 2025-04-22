@@ -18,13 +18,13 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "20"
-          cache: "yarn"
+          cache: "npm"
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Install Vercel CLI
-        run: yarn global add vercel
+        run: npm install -g vercel
 
       - name: Deploy to Vercel (Main)
         if: github.ref == 'refs/heads/main'
@@ -71,19 +71,19 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: "20"
-          cache: "yarn"
+          cache: "npm"
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Install Sentry CLI
-        run: yarn add -D @sentry/cli
+        run: npm install -D @sentry/cli
 
       - name: Build with source maps
         env:
           NEXT_PUBLIC_SENTRY_DSN: ${{ secrets.NEXT_PUBLIC_SENTRY_DSN }}
         run: |
-          yarn build
+          npm run build
 
       - name: Upload source maps to Sentry
         env:
@@ -96,14 +96,14 @@ jobs:
           ENVIRONMENT: ${{ github.ref == 'refs/heads/main' && 'qa' || 'production' }}
         run: |
           # Create a Sentry release
-          yarn sentry-cli releases new $VERCEL_GIT_COMMIT_SHA
-          yarn sentry-cli releases set-commits $VERCEL_GIT_COMMIT_SHA --auto
+          npx sentry-cli releases new $VERCEL_GIT_COMMIT_SHA
+          npx sentry-cli releases set-commits $VERCEL_GIT_COMMIT_SHA --auto
 
           # Upload source maps
-          yarn sentry-cli releases files $VERCEL_GIT_COMMIT_SHA upload-sourcemaps ./apps/web/.next --url-prefix "~/_next"
+          npx sentry-cli releases files $VERCEL_GIT_COMMIT_SHA upload-sourcemaps ./apps/web/.next --url-prefix "~/_next"
 
           # Finalize the release
-          yarn sentry-cli releases finalize $VERCEL_GIT_COMMIT_SHA
+          npx sentry-cli releases finalize $VERCEL_GIT_COMMIT_SHA
 
           # Associate release with deployment environment
-          yarn sentry-cli releases deploys $VERCEL_GIT_COMMIT_SHA new -e $ENVIRONMENT 
+          npx sentry-cli releases deploys $VERCEL_GIT_COMMIT_SHA new -e $ENVIRONMENT 
